@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    {% load static %}
+    <link
+      href="{% static 'clientapp/css/base.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <title>{% block title %} Zihao Song's Search Engine {% endblock %}</title>
+  </head>
+
+  <body>
+    <div class="big-heading">Zihao Song's Search Engine</div>
+    <br>
+
+    <div class="user-info">Load My Engine</div>
+
+    <br>
+    <div class="col text-center">
+      <input type="file" class="id_profile_file"></button>
+    </div>
+
+    <br>
+    <br>
+    <div class="col text-center">
+      <button type="button" class="btn btn-warning">
+        Construct inverted indicies
+      </button>
+    </div>
+  </body>
+</html>
