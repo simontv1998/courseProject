@@ -14,28 +14,19 @@
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
       crossorigin="anonymous"
     />
-    <title>{% block title %} Zihao's Search Engine {% endblock %}</title>
+    <title>{% block title %} Search Term {% endblock %}</title>
   </head>
 
   <body>
     <div class="big-heading">Zihao's Search Engine</div>
     <br>
-
-    <div class="user-info">Load My Engine</div>
-
+    <div class="user-info">Enter Your Search Term</div>
     <br>
-    <div class="col text-center">
-      <input type="file" class="id_profile_file"></button>
-    </div>
-
+    <form action="/search" class="col text-center">
+        <label for="search">Type your search here:</label>
+        <input type="text" id="term" name="term"><br><br>
+        <input type="submit" class="btn btn-warning" value="search">
+    </form>
     <br>
-    <br>
-    <div class="col text-center">
-      <button type="button" class="btn btn-warning">
-        <a href="loaded">
-          Construct inverted indicies
-        </a>
-      </button>
-    </div>
   </body>
 </html>
