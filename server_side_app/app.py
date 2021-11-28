@@ -82,7 +82,9 @@ def getWordFreq():
 
 @app.route("/get-top-n", methods=['POST'])
 def getTopN():
-    res = []
+    res = {}
+
+    res['wordFreqList'] = []
 
     if (request.method == "POST"):
         start_time = time.time()
@@ -106,10 +108,16 @@ def getTopN():
                 if cnt >= nVal:
                     break
                 # print("Word: "+entry[0]+", freq: "+str(entry[1]))
-                res.append((entry[0],entry[1]))
+                res['wordFreqList'].append((entry[0],entry[1]))
                 cnt += 1
         
         #print(res)
+
+        end_time = time.time()
+
+        exec_time = end_time - start_time
+
+        res['exec_time'] = exec_time
 
         response = json.dumps(res)
 

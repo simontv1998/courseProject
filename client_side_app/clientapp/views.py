@@ -114,10 +114,14 @@ def topN_action(request):
         response = requests.post(request_url, data=upload_data)
 
         # parse response
-        wordFreqMap = response.json()
+        response_dict = response.json()
 
-        context['wordFreqMap'] = wordFreqMap
+        wordFreqMap = response_dict['wordFreqList']
+        execTime = response_dict['exec_time']
+
         context['N'] = nVal
+        context['wordFreqMap'] = wordFreqMap
+        context['time'] = "{:.4f}".format(execTime)
 
         return render(request,'clientapp/topNCompleted.html',context)
 
