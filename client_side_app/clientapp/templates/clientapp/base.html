@@ -24,18 +24,18 @@
     <div class="user-info">Load My Engine</div>
 
     <br>
-    <div class="col text-center">
-      <input type="file" class="id_profile_file"></button>
-    </div>
-
-    <br>
-    <br>
-    <div class="col text-center">
-      <button type="button" class="btn btn-warning">
-        <a href="loaded">
-          Construct inverted indicies
-        </a>
-      </button>
-    </div>
+    <form method="post" action="upload" enctype="multipart/form-data">
+      {%csrf_token%}
+      <div class="col text-center">
+        <input type="file" class="id_profile_file" name="file">
+      </div>
+      <br>
+      <br>
+      <div class="col text-center">
+        <button type="submit" class="btn btn-warning">
+            Construct inverted indicies
+        </button>
+      </div>
+    </form>
   </body>
 </html>

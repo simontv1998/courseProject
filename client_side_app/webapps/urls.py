@@ -20,7 +20,7 @@ from clientapp import views
 urlpatterns = [
     #path('admin/', admin.site.urls),
     path('', views.global_action),
-    path('loaded', views.loaded_action, name='loaded'),
+    path('upload', views.upload_action, name="upload"),
     path('searchTerm', views.searchTerm_action, name='searchTerm'),
     path('topN', views.topN_action, name='topN'),
 ]
