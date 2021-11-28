@@ -3,9 +3,11 @@ from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import requests
-import json
+import os, json
 
-LOCAL_IP = 'http://127.0.0.1:5000'
+SERVER_SIDE_APP_IP = os.getenv('SERVER_SIDE_APP_IP')
+SERVER_SIDE_APP_PORT = os.getenv('SERVER_SIDE_APP_PORT')
+LOCAL_IP = SERVER_SIDE_APP_IP +':'+str(SERVER_SIDE_APP_PORT)
 
 # Create your views here.
 def global_action(request):
@@ -37,6 +39,8 @@ def upload_action(request):
             upload_file = {'file': open(filepath, 'rb')}
             upload_data={'file_name': file.name}
             
+            print(request_url)
+
             response = requests.post(request_url, files=upload_file, data=upload_data)
         
         return render(request,'clientapp/loaded.html',context)
