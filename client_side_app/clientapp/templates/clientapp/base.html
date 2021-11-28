@@ -27,7 +27,8 @@
     <form method="post" action="upload" enctype="multipart/form-data">
       {%csrf_token%}
       <div class="col text-center">
-        <input type="file" class="id_profile_file" name="file">
+        <label for="files">Select files:</label>
+        <input type="file" class="id_profile_file" name="file" multiple>
       </div>
       <br>
       <br>
