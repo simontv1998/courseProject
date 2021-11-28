@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    {% load static %}
+    <link
+      href="{% static 'clientapp/css/base.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <title>{% block title %} Search Term {% endblock %}</title>
+  </head>
+
+  <body>
+    <div class="big-heading">Zihao's Search Engine</div>
+    <br>
+    <div class="user-info">You Searched for term: {{term}}
+    <br>
+    <div class="user-info">The serach took </div>
+    <br>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Doc ID</th>
+            <th scope="col">Doc Folder</th>
+            <th scope="col">Doc Name</th>
+            <th scope="col">Frequencies</th>
+          </tr>
+        </thead>
+        
+        {% for res in searchRes %}
+            <tbody>
+                <th scope="row"> 1 </th>
+                {% for col in res %}
+                    <td>
+                        {{ col }} 
+                    </td>
+                {% endfor %}
+            </tbody>
+        {% endfor %}
+      </table>
+    <br>
+  </body>
+</html>

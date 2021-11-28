@@ -1,6 +1,6 @@
 from flask import Flask, request
-import os
 from worker import buildIndex
+import os, json, time
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'upload'
@@ -10,10 +10,10 @@ def uploadFiles():
     if request.method == "POST":
         print("###### app.py #######")
         file = request.files['file']
-        print(file)
+        # print(file)
         
         fileName = request.form['file_name']
-        print(fileName)
+        # print(fileName)
 
         # create the upload folder
         if not os.path.isdir(UPLOAD_FOLDER):
@@ -23,14 +23,57 @@ def uploadFiles():
         file.save(os.path.join(UPLOAD_FOLDER,fileName))
 
         # create index on this file
-        buildIndex(fileName)
-        
+        execTime = buildIndex(fileName)
+
+        return str(execTime)    
 
     return 'OK'
 
 @app.route("/get-freq", methods=['POST'])
 def getWordFreq():
-    if (request.method == "POST"):
-        word = request.form['word']
+    res = []
 
-    return 'Ok'
+    if (request.method == "POST"):
+        start_time = time.time()
+
+        #print("####Get Word Frequency#####")
+
+        term = request.form['term'].lower()
+        #print(term)
+
+        # load hash tables to memory and search for the term
+        # only load file-related hashtables
+        idxDirPath = os.curdir + "/index"
+        idxFiles = os.listdir(idxDirPath)
+        #print(idxFiles)
+
+        for idxFile in idxFiles:
+            fPath = os.path.join(idxDirPath, idxFile)
+            if fPath != (idxDirPath+'/globalIndex'):
+                with open(os.path.join(idxDirPath, idxFile),'r') as file:
+                    wordDict = json.load(file)
+
+                    #print(len(wordDict))
+                    
+                    if term in wordDict:
+                        freq = wordDict[term]
+                        cvtFilePath = fPath.lstrip(idxDirPath).replace('#','/')
+                        # print(cvtFilePath +": "+ str(freq))
+                        res.append((cvtFilePath, freq))
+
+        #print(res)
+
+        #print(response)
+
+        end_time = time.time()
+
+        exec_time = end_time - start_time
+
+        print('Execution time: '+str(exec_time))
+
+        response = json.dumps(res)
+
+        return response
+
+
+    return 'OK'

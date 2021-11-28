@@ -1,6 +1,4 @@
-import os
-import tarfile
-import re
+import os, tarfile, re, time, json
 
 # global wordDict
 globalWordDict = {}
@@ -9,24 +7,31 @@ stopList = {"a", "about", "above", "above", "across", "after", "afterwards", "ag
 MEDIA_ROOT = os.curdir+'/upload'
 
 # Utility Methods
-def buildIndex(relativeFilePath):
-    print("##### Build Index ######")
+def buildIndex(filename):
+    start_time = time.time()
+    # print("##### Build Index ######")
+
+    # creat a folder for indexes if it doesn't exist
+    indexDirPath = os.curdir + "/index"
+    if not os.path.exists(indexDirPath):
+        # Create a new directory because it does not exist 
+        os.makedirs(indexDirPath)
 
     # Parse the file and conctruct a dict
-    print(MEDIA_ROOT)
-    print("Media Dir: " + MEDIA_ROOT)
+    # print(MEDIA_ROOT)
+    # print("Media Dir: " + MEDIA_ROOT)
     
     # Store the unzipped file in a tmp directory
-    dirPath= MEDIA_ROOT + "/extracted/" + relativeFilePath
-    print("File Path: " + dirPath)
+    dirPath= MEDIA_ROOT + "/extracted/" + filename
+    # print("File Path: " + dirPath)
     
     # Unzip a tar.gz file
-    zipPath = MEDIA_ROOT + "/" + relativeFilePath
-    print("Zipfile Path: " + zipPath)
+    zipPath = MEDIA_ROOT + "/" + filename
+    # print("Zipfile Path: " + zipPath)
     zipFile = tarfile.open(zipPath)
     zipFile.extractall(dirPath)
     zipFile.close()
-    print("Unzipping file success")
+    # print("Unzipping file success")
 
     # Read files from the extracted directory recursively
     rootDir = dirPath
@@ -35,7 +40,7 @@ def buildIndex(relativeFilePath):
         for file in files:
             # read files and build indexes
             filePath = os.path.join(root, file)
-            print("File Path: " + filePath)
+            # print("File Path: " + filePath)
             with open(filePath, 'r', encoding="ISO-8859-1") as file:
                 wordDict = {}
 
@@ -64,25 +69,47 @@ def buildIndex(relativeFilePath):
                         globalWordDict[word] += 1
                     
             # Print the dict for debugging
-            print("##### Printing File Word Dict ######")
+            # print("##### Printing File Word Dict ######")
 
-            sort_wordDict = sorted(wordDict.items(), key=lambda x: x[1], reverse=True)
+            # write hashmaps to presistent files
+            # convert '/' to '#' in filepath
+            # print(file.name)
+            fileIdxPath = indexDirPath + '/' + os.path.relpath(file.name).lstrip('upload/extracted/').replace('/', '#')
+            # print(fileIdxPath)
+            with open(fileIdxPath, 'w') as write_file:
+                write_file.write(json.dumps(wordDict))
+
+            # sort_wordDict = sorted(wordDict.items(), key=lambda x: x[1], reverse=True)
         
-            cnt = 0
-            for entry in sort_wordDict:
-                if cnt > 20:
-                    break
-                print("Word: "+entry[0]+", freq: "+str(entry[1]))
-                cnt += 1
+            # cnt = 0
+            # for entry in sort_wordDict:
+            #     if cnt > 20:
+            #         break
+            #     # print("Word: "+entry[0]+", freq: "+str(entry[1]))
+            #     cnt += 1
 
     # Print the dict for debugging
-    print("##### Printing Global Word Dict ######")
+    # print("##### Printing Global Word Dict ######")
 
-    sort_wordDict = sorted(globalWordDict.items(), key=lambda x: x[1], reverse=True)
+    # sort_wordDict = sorted(globalWordDict.items(), key=lambda x: x[1], reverse=True)
 
-    cnt = 0
-    for entry in sort_wordDict:
-        if cnt > 20:
-            break
-        print("Word: "+entry[0]+", freq: "+str(entry[1]))
-        cnt += 1
+    # cnt = 0
+    # for entry in sort_wordDict:
+    #     if cnt > 20:
+    #         break
+    #     print("Word: "+entry[0]+", freq: "+str(entry[1]))
+    #     cnt += 1
+
+
+    # write hashmaps to presistent files
+    with open(indexDirPath + '/globalIndex', 'w') as write_file:
+        write_file.write(json.dumps(globalWordDict))
+    
+    
+    end_time = time.time()
+
+    execTime = end_time-start_time
+
+    print(execTime)
+
+    return execTime
