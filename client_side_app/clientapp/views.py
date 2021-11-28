@@ -52,7 +52,7 @@ def searchTerm_action(request):
             return render(request,'clientapp/searchTerm.html',context)
 
         term = request.POST['term']
-        print("term: "+ term)
+        # print("term: "+ term)
 
         upload_data = {'term': term}
         request_url = LOCAL_IP+'/get-freq'
@@ -63,31 +63,36 @@ def searchTerm_action(request):
         # 1) get the execution time first
         occurList = response.json()
 
-        print(response.json())
+        # print(response.json())
 
         if len(occurList) == 0:
             return render(request,'clientapp/searchTermCompleted.html',context)
 
         searchRes = []
 
+        execTime = 0
+
         for filePath, freq in occurList:
-            print(filePath + ', ' + str(freq))
+            # print(filePath + ', ' + str(freq))
+
+            if freq == -1:
+                execTime = float(filePath)
+                continue
             
             splits = filePath[filePath.index('/')+1:].rsplit('/', 1)
 
-            print(splits)
+            # print(splits)
 
             if (len(splits) <= 1):
-                entries = ['N/A', splits[0], str(freq)]
+                entries = ['N/A', splits[0], freq]
             else:
-                entries = [splits[0], splits[1], str(freq)]
+                entries = [splits[0], splits[1], freq]
             
             searchRes.append(entries)
 
-
         context['term'] = term
-        context['searchRes'] = searchRes
-        context['idx'] = 0
+        context['searchRes'] = sorted(searchRes,key=lambda x: (-x[2],x[0]))
+        context['time'] = "{:.4f}".format(execTime)
 
         return render(request,'clientapp/searchTermCompleted.html',context)
 

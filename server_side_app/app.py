@@ -69,7 +69,9 @@ def getWordFreq():
 
         exec_time = end_time - start_time
 
-        print('Execution time: '+str(exec_time))
+        #print('Execution time: '+str(exec_time))
+
+        res.append((str(exec_time), -1))
 
         response = json.dumps(res)
 

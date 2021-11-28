@@ -22,7 +22,7 @@
     <br>
     <div class="user-info">You Searched for term: {{term}}
     <br>
-    <div class="user-info">The serach took </div>
+    <div class="user-info">The serach took: {{time}} seconds </div>
     <br>
 
     <table class="table">
@@ -37,7 +37,7 @@
         
         {% for res in searchRes %}
             <tbody>
-                <th scope="row"> 1 </th>
+                <th scope="row" class="cssCount"></th>
                 {% for col in res %}
                     <td>
                         {{ col }} 
