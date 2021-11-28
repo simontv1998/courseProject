@@ -79,3 +79,41 @@ def getWordFreq():
 
 
     return 'OK'
+
+@app.route("/get-top-n", methods=['POST'])
+def getTopN():
+    res = []
+
+    if (request.method == "POST"):
+        start_time = time.time()
+
+        #print("####Get Word Frequency#####")
+
+        nVal = int(request.form['nVal'])
+        #print(nVal)
+
+        # load hash tables to memory and search for the term
+        # only load file-related hashtables
+        idxDirPath = os.curdir + "/index"
+        globalIdxPath = idxDirPath + '/globalIndex'
+        #print(globalIdxPath)
+
+        with open(globalIdxPath,'r') as file:
+            wordDict = json.load(file)
+
+            cnt = 0
+            for entry in wordDict:
+                if cnt >= nVal:
+                    break
+                # print("Word: "+entry[0]+", freq: "+str(entry[1]))
+                res.append((entry[0],entry[1]))
+                cnt += 1
+        
+        #print(res)
+
+        response = json.dumps(res)
+
+        return response
+
+
+    return 'OK'

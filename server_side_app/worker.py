@@ -79,31 +79,12 @@ def buildIndex(filename):
             with open(fileIdxPath, 'w') as write_file:
                 write_file.write(json.dumps(wordDict))
 
-            # sort_wordDict = sorted(wordDict.items(), key=lambda x: x[1], reverse=True)
-        
-            # cnt = 0
-            # for entry in sort_wordDict:
-            #     if cnt > 20:
-            #         break
-            #     # print("Word: "+entry[0]+", freq: "+str(entry[1]))
-            #     cnt += 1
-
-    # Print the dict for debugging
-    # print("##### Printing Global Word Dict ######")
-
-    # sort_wordDict = sorted(globalWordDict.items(), key=lambda x: x[1], reverse=True)
-
-    # cnt = 0
-    # for entry in sort_wordDict:
-    #     if cnt > 20:
-    #         break
-    #     print("Word: "+entry[0]+", freq: "+str(entry[1]))
-    #     cnt += 1
-
+    # global wordDict
+    sorted_globalWordDict = sorted(globalWordDict.items(), key=lambda x: (-x[1],x[0]))
 
     # write hashmaps to presistent files
     with open(indexDirPath + '/globalIndex', 'w') as write_file:
-        write_file.write(json.dumps(globalWordDict))
+        write_file.write(json.dumps(sorted_globalWordDict))
     
     
     end_time = time.time()

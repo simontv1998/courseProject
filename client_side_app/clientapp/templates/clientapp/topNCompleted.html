@@ -20,9 +20,9 @@
   <body>
     <div class="big-heading">Zihao's Search Engine</div>
     <br>
-    <div class="user-info">You Searched for term: {{term}}
+    <div class="user-info">Top-N frequent terms
     <br>
-    <div class="user-info">The serach took: {{time}} seconds </div>
+    <div class="user-info">N = {{N}}
     <br>
     <div class="user-info"> <a href="{% url 'loaded' %}">Go Back to Search Page</a></div>
     <br>
@@ -30,21 +30,17 @@
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">Doc ID</th>
-            <th scope="col">Doc Folder</th>
-            <th scope="col">Doc Name</th>
-            <th scope="col">Frequencies</th>
+            <th scope="col">Term ID</th>
+            <th scope="col">Term</th>
+            <th scope="col">Term Frequencies</th>
           </tr>
         </thead>
         
-        {% for res in searchRes %}
+        {% for word, freq in wordFreqMap %}
             <tbody>
                 <th scope="row" class="cssCount"></th>
-                {% for col in res %}
-                    <td>
-                        {{ col }} 
-                    </td>
-                {% endfor %}
+                    <td> {{ word }}</td>
+                    <td> {{ freq }}</td>
             </tbody>
         {% endfor %}
       </table>

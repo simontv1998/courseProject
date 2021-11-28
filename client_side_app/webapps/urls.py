@@ -21,6 +21,7 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     path('', views.global_action),
     path('upload', views.upload_action, name="upload"),
+    path('loaded', views.loaded_action, name="loaded"),
     path('searchTerm', views.searchTerm_action, name='searchTerm'),
     path('topN', views.topN_action, name='topN'),
 ]

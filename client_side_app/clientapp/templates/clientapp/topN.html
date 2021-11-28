@@ -22,10 +22,11 @@
     <br>
     <div class="user-info">Enter Your N Value</div>
     <br>
-    <form action="/topN" class="col text-center">
-        <label for="search">Type your N here:</label>
-        <input type="text" id="topN" name="topN"><br><br>
-        <input type="submit" class="btn btn-warning" value="search">
+    <form method="post" action="/topN" class="col text-center" enctype="multipart/form-data">
+      {%csrf_token%}  
+      <label for="search">Type your N here:</label>
+      <input type="text" id="nVal" name="nVal"><br><br>
+      <input type="submit" class="btn btn-warning" value="search">
     </form>
     <br>
   </body>

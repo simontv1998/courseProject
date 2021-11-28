@@ -47,6 +47,9 @@ def upload_action(request):
 def searchTerm_action(request):
     context = {}
 
+    if request.method == 'GET':
+        return render(request,'clientapp/searchTerm.html',context)
+
     if request.method == 'POST':
         if 'term' not in request.POST:
             return render(request,'clientapp/searchTerm.html',context)
@@ -58,11 +61,8 @@ def searchTerm_action(request):
         request_url = LOCAL_IP+'/get-freq'
         response = requests.post(request_url, data=upload_data)
 
-        # handle response
-        
-        # 1) get the execution time first
+        # parse response
         occurList = response.json()
-
         # print(response.json())
 
         if len(occurList) == 0:
@@ -75,6 +75,7 @@ def searchTerm_action(request):
         for filePath, freq in occurList:
             # print(filePath + ', ' + str(freq))
 
+            # get the execution time
             if freq == -1:
                 execTime = float(filePath)
                 continue
@@ -96,17 +97,32 @@ def searchTerm_action(request):
 
         return render(request,'clientapp/searchTermCompleted.html',context)
 
-    if request.method == 'GET':
-        return render(request,'clientapp/searchTerm.html',context)
-
 def topN_action(request):
     context = {}
 
     if request.method == 'GET':
         return render(request,'clientapp/topN.html',context)
 
-def search_completed_action(request):
+    if request.method == 'POST':
+        if 'nVal' not in request.POST:
+            return render(request,'clientapp/topN.html',context)
+
+        nVal = request.POST['nVal']
+
+        upload_data = {'nVal': nVal}
+        request_url = LOCAL_IP+'/get-top-n'
+        response = requests.post(request_url, data=upload_data)
+
+        # parse response
+        wordFreqMap = response.json()
+
+        context['wordFreqMap'] = wordFreqMap
+        context['N'] = nVal
+
+        return render(request,'clientapp/topNCompleted.html',context)
+
+def loaded_action(request):
     context = {}
 
     if request.method == 'GET':
-        return render(request,'searchTermCompleted.html',context)
+        return render(request,'clientapp/loaded.html',context)
