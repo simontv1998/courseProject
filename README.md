@@ -2,6 +2,7 @@ Mini Search Engine
 
 Video:
 Code WalkThrough + Demo https://www.youtube.com/watch?v=8qslW7UbN8A
+<br>
 How I run my apps https://www.youtube.com/watch?v=HsdnY8mkIvQ
 
 Step to deploy server side app to GCP cluster:
