@@ -27,7 +27,7 @@ def upload_action(request):
         for file in request.FILES.getlist('file'):
 
             # file = request.FILES['file']
-            print(file)
+            # print(file)
             # Use FSStorage API to save file
             # https://docs.djangoproject.com/en/3.2/ref/files/storage/
             fsStorage = FileSystemStorage()
@@ -39,7 +39,7 @@ def upload_action(request):
             upload_file = {'file': open(filepath, 'rb')}
             upload_data={'file_name': file.name}
             
-            print(request_url)
+            # print(request_url)
 
             response = requests.post(request_url, files=upload_file, data=upload_data)
         
