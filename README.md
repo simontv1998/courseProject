@@ -1,5 +1,9 @@
 Mini Search Engine
 
+Video:
+Code WalkThrough + Demo https://www.youtube.com/watch?v=8qslW7UbN8A
+How I run my apps https://www.youtube.com/watch?v=HsdnY8mkIvQ
+
 Step to deploy server side app to GCP cluster:
 1) cd server_side_app
 2) docker build -t simontv1998/server_side_app .
