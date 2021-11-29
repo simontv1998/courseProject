@@ -8,7 +8,7 @@ UPLOAD_FOLDER = 'upload'
 @app.route("/upload-files", methods=['POST'])
 def uploadFiles():
     if request.method == "POST":
-        print("###### app.py #######")
+        # print("###### app.py #######")
         file = request.files['file']
         # print(file)
         

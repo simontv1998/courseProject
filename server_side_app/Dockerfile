@@ -10,4 +10,6 @@ EXPOSE 30000
 
 ENV FLASK_RUN_PORT=30000
 
+# SHELL ["/bin/bash", "-c"]
+
 CMD ["flask","run","--host=0.0.0.0"]

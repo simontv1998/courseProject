@@ -91,6 +91,6 @@ def buildIndex(filename):
 
     execTime = end_time-start_time
 
-    print(execTime)
+    #print(execTime)
 
     return execTime
